@@ -4,7 +4,7 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Drawer } from "expo-router/drawer";
 
 import DrawerContent from "@/components/layouts/DrawerContent";
-import colors from "@/theme/colors";
+import colors from "@/theme/assets/colors";
 
 export default function TabsLayout() {
   return (
