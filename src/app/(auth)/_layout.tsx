@@ -1,12 +1,18 @@
-import { Stack } from 'expo-router';
-import React from 'react';
+import { Redirect, Stack } from "expo-router";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+// import { useAuthContext } from "@/contexts/AuthContext";
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function AuthLayout() {
+  // const { isAuthenticated } = useAuthContext();
+
+  // if (isAuthenticated) {
+  //   return <Redirect href="/(root)/(tabs)/news" />;
+  // }
 
   return (
-    <Stack.Screen name="sign-in" />
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="sign-in" />
+      <Stack.Screen name="sign-up" />
+    </Stack>
   );
 }
