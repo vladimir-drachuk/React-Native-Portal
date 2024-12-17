@@ -1,7 +1,7 @@
 import { useAuth } from '@/auth';
-import { Button } from '@/components/atomic/Button';
-import { Text } from '@/components/atomic/Text';
-import { View } from '@/components/atomic/View';
+import { Button } from '@/components/atomic/button';
+import { Text } from '@/components/atomic/text';
+import { View } from '@/components/atomic/view';
 import { useGetUserQuery } from '@/rest/query';
 
 export default () => {

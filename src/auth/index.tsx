@@ -7,7 +7,7 @@ import {
 } from 'firebase/auth';
 
 import { initializeFirebaseApp } from '@/firebase';
-import { BaseComponentProps } from '@/types/props';
+import { BaseComponentProps } from '@/types';
 import { useCreateUserMutation, useGetUserQuery } from '@/rest/query';
 
 interface AuthContextProps {

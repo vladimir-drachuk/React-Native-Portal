@@ -3,15 +3,15 @@ import { DefaultTheme, ThemeProvider as RNThemeProvider } from '@react-navigatio
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-import { BaseComponentProps } from '@/types/props';
+import { BaseComponentProps } from '@/types';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export const ThemeProvider: FC<BaseComponentProps> = ({ children }) => {
   const [loaded] = useFonts({
-    PrimaryMedium: require("../assets/fonts/EtelkaMedium.otf"),
-    PrimaryText: require("../assets/fonts/EtelkaText.otf"),
+    PrimaryMedium: require('../assets/fonts/EtelkaMedium.otf'),
+    PrimaryText: require('../assets/fonts/EtelkaText.otf'),
   });
 
   useEffect(() => {

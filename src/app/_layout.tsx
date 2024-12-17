@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 
-import { Providers } from '@/components/business/providers/Providers';
+import { Providers } from '@/components/business/providers';
 
 import 'react-native-reanimated';
 import '../styles/global.css';

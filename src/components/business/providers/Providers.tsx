@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { BaseComponentProps } from '@/types/props';
+import { BaseComponentProps } from '@/types';
 import { ThemeProvider } from '@/theme';
 import { QueryProvider } from '@/rest/query';
 import { AuthProvider } from '@/auth';
