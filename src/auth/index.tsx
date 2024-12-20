@@ -1,21 +1,25 @@
-import { createContext, FC, useContext, useState } from 'react';
-import { getFirestore } from 'firebase/firestore';
+import { createContext, FC, useContext, useEffect, useState } from 'react';
 import {
   getAuth,
+  signOut,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  onAuthStateChanged
 } from 'firebase/auth';
 
 import { initializeFirebaseApp } from '@/firebase';
 import { BaseComponentProps } from '@/types';
-import { useCreateUserMutation, useGetUserQuery } from '@/rest/query';
+import { useCreateUserMutation, useLazyGetUserQuery } from '@/rest/query';
+import { UserAuthModel, UserModel } from '@/rest/model';
+
+type AuthProps = Omit<UserModel, 'id'> & UserAuthModel;
+type UserProps = Omit<UserAuthModel, 'password'> & UserModel;
 
 interface AuthContextProps {
-  user: string | null;
-  isLoading: boolean;
-  signUp(mail: string, password: string): Promise<void>;
-  logIn(): Promise<void>;
-  logOut(): void;
+  user: UserProps | null;
+  signUp(data: AuthProps): Promise<void>;
+  logIn(data: UserAuthModel): Promise<void>;
+  logOut(): Promise<void>;
 }
 
 initializeFirebaseApp();
@@ -23,56 +27,56 @@ const auth = getAuth();
 
 const AuthContext = createContext<AuthContextProps>({
   user: null,
-  isLoading: false,
   signUp: async () => {},
   logIn: async () => {},
-  logOut: () => {}
+  logOut: async () => {}
 });
 
 const { Provider } = AuthContext;
 
 export const AuthProvider: FC<BaseComponentProps> = ({ children }) => {
-  const {} = useGetUserQuery()
-  const { mutate: saveUserToDb, isPending } = useCreateUserMutation();
-  const [user, setUser] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [getUserFromDb] = useLazyGetUserQuery();
+  const { mutateAsync: saveUserToDb } = useCreateUserMutation();
+  const [user, setUser] = useState<UserProps | null>(null);
 
-  const isLoading = loading || isPending;
-
-  const signUp = async (mail: string, password: string) => {
+  const signUp = async ({ firstName, lastName, email, password }: AuthProps) => {
     if (user) return;
 
-    try {
-      setLoading(true);
+    const { user: newUser } = await createUserWithEmailAndPassword(auth, email, password);
 
-      const { user: newUser } = await createUserWithEmailAndPassword(auth, mail, password);
-      const name = newUser.email ?? ''
+    if (newUser) {
+      const id = newUser.uid;
 
-      saveUserToDb({ id: newUser.uid, name })
-
-      setUser(name);
-    } finally {
-      setLoading(false);
+      await saveUserToDb({ id, firstName, lastName });
+      setUser({ firstName, lastName, email, id });
     }
   }
 
-  const logIn = async () => {
+  const logIn = async ({ email, password }: UserAuthModel) => {
     if (user) return;
 
-    try {
-      setLoading(true);
+    const { user: loggedUser } = await signInWithEmailAndPassword(auth, email, password);
+    const result = await getUserFromDb(loggedUser.uid);
 
-      const { user: loggedUser } = await signInWithEmailAndPassword(auth, 'valera@mail.ru', '123456');
-      console.log({ loggedUser });
-      setUser(loggedUser.displayName);
-    } finally {
-      setLoading(false);
+    if (result) {
+      const { firstName, lastName } = result;
+
+      setUser({ firstName, lastName, email, id: loggedUser.uid });
     }
   }
 
-  const logOut = () => {}
+  const logOut = async () => {
+    await signOut(auth);
 
-  return <Provider value={{ user, isLoading, signUp, logIn, logOut }}>{children}</Provider>;
+    setUser(null);
+    console.log('logout');
+  }
+
+  useEffect(() => onAuthStateChanged(auth, (authUser) => {
+    console.log({ authUser });
+  }), []);
+
+  return <Provider value={{ user, signUp, logIn, logOut }}>{children}</Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);

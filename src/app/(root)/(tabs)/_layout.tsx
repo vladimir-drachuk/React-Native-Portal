@@ -3,7 +3,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Drawer } from "expo-router/drawer";
 
-import DrawerContent from "@/components/layouts/DrawerContent";
+import DrawerContent from "@/components/layouts/drawer-content";
 import colors from "@/theme/assets/colors";
 
 export default function TabsLayout() {

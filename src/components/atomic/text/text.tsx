@@ -1,6 +1,18 @@
 import { FC } from 'react';
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
 
-export interface TextProps extends RNTextProps {};
+import { typography } from '@/theme/assets/typographies';
 
-export const Text: FC<TextProps> = (props) => <RNText {...props} />
+export interface TextProps extends RNTextProps {
+  variant?: keyof typeof typography;
+};
+
+export const Text: FC<TextProps> = ({ variant = 'body2', style, ...props }) => (
+  <RNText
+    {...props}
+    style={{
+      ...style as Record<string, string>,
+      ...typography[variant]
+    }}
+  />
+);

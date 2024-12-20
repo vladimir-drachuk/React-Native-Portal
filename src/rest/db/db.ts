@@ -6,13 +6,13 @@ const app = initializeFirebaseApp();
 const db = getFirestore(app);
 
 export const dbService = {
-  getById: async (collectionName: string, id: string) => {
+  getById: async <T>(collectionName: string, id: string) => {
     const userRef = collection(db, collectionName);
     const docRef = doc(userRef, id);
 
     const document = await getDoc(docRef);
   
-    return document.data()
+    return document.data() as T
   },
   create: async <T extends { id: string }>(collectionName: string, data: T) => {
     const userRef = collection(db, collectionName);

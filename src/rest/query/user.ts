@@ -11,10 +11,10 @@ export const useGetUserQuery = (userId?: string) => useQuery({
   queryKey: [USER_KEY, { userId }],
 });
 
-export const useLazyGetUserQuery = (userId?: string) => useLazyQuery({
+export const useLazyGetUserQuery = () => useLazyQuery({
   initialData: undefined,
-  queryFn: async () => userId && getUser(userId),
-  queryKey: [USER_KEY, { userId }],
+  queryFn: getUser,
+  queryKey: [USER_KEY],
 });
 
 export const useCreateUserMutation = () => useMutation({

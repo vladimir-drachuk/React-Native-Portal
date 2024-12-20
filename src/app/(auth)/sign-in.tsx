@@ -1,3 +1,3 @@
-import { Text } from '@/components/atomic/text';
+import { SignInScreen } from '@/screens/auth/sign-in';
 
-export default () => <Text>Sign In</Text>
+export default () => <SignInScreen />

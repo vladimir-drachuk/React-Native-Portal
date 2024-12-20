@@ -50,7 +50,7 @@ export const Button: FC<ButtonProps> = ({
     <RNTouchableOpacity
       {...props}
       disabled={disabled}
-      className={`flex flex-row items-center justify-center gap-2 rounded px-4 py-2 text-white ${disabled &&'opacity-40'} ${styles.button} ${className}`}
+      className={`flex flex-row items-center justify-center gap-2 rounded px-4 py-2.5 text-white ${disabled &&'opacity-40'} ${styles.button} ${className}`}
     >
       {icon}
       <Text className={`uppercase ${styles.text}`}>

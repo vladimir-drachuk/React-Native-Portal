@@ -1,4 +1,10 @@
 export interface UserModel {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface UserAuthModel {
+  password: string;
+  email: string
 }

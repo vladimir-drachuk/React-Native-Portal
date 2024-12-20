@@ -11,4 +11,4 @@ export const Form: FC<FormProps> = ({ children, ...props }) => (
       {children}
     </FForm>
   </Formik>
-)
+);
