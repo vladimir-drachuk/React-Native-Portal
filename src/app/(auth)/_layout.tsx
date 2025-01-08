@@ -1,18 +1,10 @@
-import { Redirect, Stack } from "expo-router";
+import { Stack } from "expo-router";
 
-// import { useAuthContext } from "@/contexts/AuthContext";
+import { Routes } from '@/components/business/routing';
 
-export default function AuthLayout() {
-  // const { isAuthenticated } = useAuthContext();
-
-  // if (isAuthenticated) {
-  //   return <Redirect href="/(root)/(tabs)/news" />;
-  // }
-
-  return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="sign-in" />
-      <Stack.Screen name="sign-up" />
-    </Stack>
-  );
-}
+export default () => (
+  <Routes screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="sign-in" />
+    <Stack.Screen name="sign-up" />
+  </Routes>
+);

@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
-import { View, ViewProps } from '@/components/atomic/view';
+import { DefaultViewProps, View } from '@/components/atomic/view';
 import { Text } from '@/components/atomic/text';
 import { Icon } from '@/components/atomic/icon';
 
-export interface ErrorProps extends ViewProps {}
+export interface ErrorProps extends DefaultViewProps {}
 
 export const Error: FC<ErrorProps > = ({ children, className, ...props }) => (
   <View

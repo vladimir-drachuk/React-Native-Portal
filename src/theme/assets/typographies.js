@@ -50,7 +50,7 @@ export const typography = {
   subtitle2: {
     fontFamily: 'PrimaryText',
     fontSize: 15,
-    lineHeight: 24,
+    lineHeight: 22,
     letterSpacing: 0,
   },
   body: {

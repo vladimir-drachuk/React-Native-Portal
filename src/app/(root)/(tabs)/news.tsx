@@ -1,3 +1,4 @@
-import { Text } from '@/components/atomic/text';
+import { withAuthorization } from '@/auth';
+import { NewsScreen } from '@/screens/root/news/news';
 
-export default () => <Text>News</Text>;
+export default withAuthorization(NewsScreen);

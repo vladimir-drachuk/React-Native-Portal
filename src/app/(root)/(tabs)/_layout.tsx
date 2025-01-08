@@ -1,14 +1,14 @@
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { Drawer } from 'expo-router/drawer';
 
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { Drawer } from "expo-router/drawer";
+import { DrawerContent } from '@/components/layouts/drawer-content';
 
-import DrawerContent from "@/components/layouts/drawer-content";
-import colors from "@/theme/assets/colors";
+import colors from '@/theme/assets/colors';
 
 export default function TabsLayout() {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView className="flex-1">
       <Drawer
         initialRouteName="news"
         screenOptions={{

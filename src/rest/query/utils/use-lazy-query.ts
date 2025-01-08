@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { DefinedInitialDataOptions, QueryKey, useQuery } from '@tanstack/react-query';
+import {
+  DefinedInitialDataOptions,
+  QueryKey,
+  useQuery,
+} from '@tanstack/react-query';
 
 interface LazyQueryOptions<P, D> extends Omit<DefinedInitialDataOptions<unknown, Error, unknown, QueryKey>, 'queryFn'> {
   queryFn: (props: P) => Promise<D>; 
@@ -8,9 +12,9 @@ interface LazyQueryOptions<P, D> extends Omit<DefinedInitialDataOptions<unknown,
 export const useLazyQuery = <P, D>({ queryFn, ...queryOptions }: LazyQueryOptions<P, D>) => {
   const [enabled, setEnabled] = useState(false);
   const [props, setProps] = useState<P | null>(null);
-  const pendingRequestRef = useRef<((value: D) => void) | null>(null)
+  const pendingRequestRef = useRef<((value: D) => void) | null>(null);
 
-  const { isLoading, data, ...restParams } = useQuery({
+  const { isLoading, data, refetch, ...restParams } = useQuery({
     ...queryOptions,
     queryFn: () => props && queryFn(props),
     enabled,
@@ -23,6 +27,7 @@ export const useLazyQuery = <P, D>({ queryFn, ...queryOptions }: LazyQueryOption
       pendingRequestRef.current = resolve;
       setProps(props);
       setEnabled(true);
+      refetch();
     }
   )}, []);
 
@@ -42,6 +47,6 @@ export const useLazyQuery = <P, D>({ queryFn, ...queryOptions }: LazyQueryOption
 
   return [
     handleEnabled,
-    { isLoading, data, ...restParams }
+    { isLoading, data, refetch, ...restParams }
   ] satisfies [typeof handleEnabled, ReturnType<typeof useQuery>];
 }

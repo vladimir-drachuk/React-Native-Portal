@@ -1,3 +1,1 @@
-import { DrawerContent } from './drawer-content';
-
-export default DrawerContent;
+export * from './drawer-content';

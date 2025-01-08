@@ -12,15 +12,16 @@ import { Text } from '@/components/atomic/text';
 import { useAuth } from '@/auth';
 
 export const DrawerContent: FC<DrawerContentComponentProps> = (props: DrawerContentComponentProps) => {
-  const { logOut } = useAuth()
+  const { logOut, user } = useAuth();
+  const { firstName = '', lastName = '' } = user ?? {};
 
   return (
-    <View style={{ flex: 1 }}>
+    <View className="flex-1 pt-20">
       <DrawerContentScrollView {...props}>
         <View className="border-secondary-100 border-b px-4 pb-4 pt-0 flex flex-row justify-between items-center">
           <View className="flex flex-row items-center gap-4">
             <Text className="text-lg font-PrimaryText">
-              name
+              {`${firstName} ${lastName}`}
             </Text>
           </View>
           <MaterialIcons

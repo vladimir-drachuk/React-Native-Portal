@@ -3,9 +3,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { View } from '@/components/atomic/view';
 import { Text } from '@/components/atomic/text';
-import { Image } from '@/components/atomic/image';
+import { HiQoLogo } from '@/components/layouts/hiqo-logo';
 
-import HiQoLogo from '@/assets/images/hiqo-logo.png';
 
 export interface SignContainerProps {
   title: string;
@@ -16,9 +15,9 @@ export interface SignContainerProps {
 export const SignContainer: FC<SignContainerProps> = ({ title, form, bottomLink }) => (
   <SafeAreaView className="flex flex-grow justify-center items-center p-2">
     <View className="max-w-96 w-full mb-4">  
-      <Image
-        source={HiQoLogo}
-        className="w-[92px] mb-6 mx-auto"
+      <HiQoLogo
+        className="mb-6 mx-auto"
+        style={{ width: 72, height: 53 }}
       />
       <Text
         variant="h4"
