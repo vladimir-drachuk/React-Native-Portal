@@ -1,27 +1,41 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 
 import { WithoutProps } from '@/types';
 import { Tabs } from '@/components/atomic/tabs';
-
-const DATA = [
-  {
-    key: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    tabName: 'First Item',
-    content: 'First Content',
-
-  },
-  {
-    key: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    tabName: 'Second Item',
-    content: 'Second Content',
-  },
-  {
-    key: '58694a0f-3da1-471f-bd96-145571e29d72',
-    tabName: 'Third Item',
-    content: 'Third Content',
-  },
-];
+import { NewsType } from '@/rest/model';
+import { useGetNewsQuery } from '@/rest/query';
+import { LoadingContainer } from '@/components/layouts/loading-container';
+import { getNewsList } from './news-list';
 
 export const NewsScreen: FC<WithoutProps> = () => {
-  return <Tabs data={DATA} />
+  const { data, isLoading } = useGetNewsQuery();
+
+  const tabsData = useMemo(() => data ? [
+    {
+      key: 'all-news',
+      tabName: 'All news',
+      content: getNewsList(data),
+    },
+    {
+      key: NewsType.EVENTS,
+      tabName: 'Events',
+      content: getNewsList(data.filter(({ type }) => type === NewsType.EVENTS)),
+    },
+    {
+      key: NewsType.NEWCOMERS,
+      tabName: 'Newcomers',
+      content: getNewsList(data.filter(({ type }) => type === NewsType.NEWCOMERS)),
+    },
+    {
+      key: NewsType.LIFE,
+      tabName: 'Company’s Life ',
+      content: getNewsList(data.filter(({ type }) => type === NewsType.LIFE)),
+    },
+  ] : [], [data]);
+
+  return (
+    <LoadingContainer isLoading={isLoading}>
+      <Tabs data={tabsData} />
+    </LoadingContainer>
+  );
 };

@@ -20,7 +20,7 @@ export interface TabsProps {
 
 export const Tabs: FC<TabsProps> = ({ data, defaultActiveTab = 0 }) => {
   const [activeTab, setActiveTab] = useState(defaultActiveTab);
-  const content = data[activeTab]?.content;
+  const { content } = data[activeTab] ?? {};
 
   return (
     <View>
@@ -37,7 +37,7 @@ export const Tabs: FC<TabsProps> = ({ data, defaultActiveTab = 0 }) => {
           >
             <Text
               variant="subtitle2"
-              className={index === activeTab ? 'color-brand-100 border-brand-100 border-b-2 py-3' : 'py-3'}
+              className={`py-3 ${index === activeTab ? 'color-brand-100 border-brand-100 border-b-2' : ''}`}
             >
               {tabName}
             </Text>

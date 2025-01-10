@@ -14,7 +14,7 @@ export const Error: FC<ErrorProps > = ({ children, className, ...props }) => (
     <Icon
       type="close-circle-outline"
       className="text-brand-100"
-      size={16}
+      size="small"
     />
     <Text className="text-brand-100">
       {children}

@@ -1,5 +1,7 @@
 import { FC, ReactNode } from 'react';
-import { Formik, Form as FForm, FormikConfig } from 'formik';
+import { Formik, FormikConfig } from 'formik';
+
+import { View } from '@/components/atomic/view';
 
 export interface FormProps extends FormikConfig<Record<string, unknown>> {
   children: ReactNode;
@@ -7,8 +9,8 @@ export interface FormProps extends FormikConfig<Record<string, unknown>> {
 
 export const Form: FC<FormProps> = ({ children, ...props }) => (
   <Formik {...props}>
-    <FForm>
+    <View>
       {children}
-    </FForm>
+    </View>    
   </Formik>
 );
